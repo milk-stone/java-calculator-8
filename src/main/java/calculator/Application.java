@@ -19,11 +19,23 @@ public class Application {
 
     public static int calculateSum(String userInput) {
         int sum = 0;
-        String numberPart = userInput;
-        sum = Arrays.stream(numberPart.split("[:,]"))
-                .filter(s -> !s.isEmpty())
-                .mapToInt(Integer::parseInt)
-                .sum();
+        Matcher matcher = START_PATTERN.matcher(userInput);
+
+        if (matcher.find()) {
+            char customDelimiter = userInput.charAt(2);
+
+            String numberPart = userInput.substring(matcher.end());
+            sum = Arrays.stream(numberPart.split("[:" + Pattern.quote(String.valueOf(customDelimiter)) + ",]"))
+                    .filter(s -> !s.isEmpty())
+                    .mapToInt(Integer::parseInt)
+                    .sum();
+        } else {
+            String numberPart = userInput;
+            sum = Arrays.stream(numberPart.split("[:,]"))
+                    .filter(s -> !s.isEmpty())
+                    .mapToInt(Integer::parseInt)
+                    .sum();
+        }
         return sum;
     }
 }
