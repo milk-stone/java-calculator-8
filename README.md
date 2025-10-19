@@ -2,7 +2,7 @@
 
 ### **구현할 기능 목록**
 
-- [ ] **입출력 처리**
+- [x] **입출력 처리**
   - 입력 : `camp.nextstep.edu.missionutils.Console` 라이브러리의 `readLine()` 사용
   - 출력 : `System.out.println()`, `System.out.print()` 등을 이용
 
@@ -53,6 +53,6 @@
   
 
 ###  **제출 전 확인할 것들**
-  - [ ] JDK 21 버전 환경 구축
+  - [x] JDK 21 버전 환경 구축
   - [ ] 자바 코드 컨벤션을 지켰는지 확인하기
-  - [ ] `System.exit()`를 호출하지 않았는 지 확인하기
+  - [ ] `System.exit()`를 호출하지 않았는지 확인하기
