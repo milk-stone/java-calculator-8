@@ -9,24 +9,26 @@ import java.util.regex.Pattern;
 
 public final class CustomParser {
 
-    private static final Pattern START_PATTERN = Pattern.compile("^\\/\\/\\W\\\\n");
+    private static final Pattern START_PATTERN = Pattern.compile("^//(.)\\\\n(.*)");
 
     public static ParsedInput parse(String userInput) {
-        String delimiter = ":,";
+        String delimiters = ":,";
         String numberPart = userInput;
 
-        char customDelimiter = findCustomDelimiter(userInput);
+        Matcher matcher = START_PATTERN.matcher(userInput);
 
-        if (customDelimiter != '\0' && !isAllowedCustomDelimiter(customDelimiter)) {
-            throw new IllegalArgumentException("커스텀 구별자는 특수 문자여야 합니다. 입력된 값: " + customDelimiter);
+        if (matcher.find()) {
+            String customDelimiterStr = matcher.group(1);
+            numberPart = matcher.group(2);
+            char customDelimiter = customDelimiterStr.charAt(0);
+
+            if (!isAllowedCustomDelimiter(customDelimiter)) {
+                throw new IllegalArgumentException("커스텀 구별자는 특수 문자여야 합니다. 입력된 값: " + customDelimiter);
+            }
+            delimiters += Pattern.quote(customDelimiterStr);
         }
 
-        if (customDelimiter != '\0') {
-            delimiter = delimiter + customDelimiter;
-            numberPart = userInput.substring(5);
-        }
-
-        String fullDelimiter = "[" + delimiter + "]";
+        String fullDelimiter = "[" + delimiters + "]";
 
         List<Integer> validNumbers = getIntegers(numberPart, fullDelimiter);
         return new ParsedInput(validNumbers);
@@ -59,15 +61,6 @@ public final class CustomParser {
             throw new IllegalArgumentException("잘못된 숫자 형식입니다. ", e);
         }
         return validNumbers;
-    }
-
-
-    private static char findCustomDelimiter(String userInput) {
-        Matcher matcher = START_PATTERN.matcher(userInput);
-        if (matcher.find()) {
-            return userInput.charAt(2);
-        }
-        return '\0';
     }
 
     private static boolean isAllowedCustomDelimiter(char customDelimiter) {
