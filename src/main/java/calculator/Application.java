@@ -1,41 +1,19 @@
 package calculator;
 
-import camp.nextstep.edu.missionutils.Console;
-import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import calculator.controller.CalculatorController;
+import calculator.model.StringCalculator;
+import calculator.view.InputView;
+import calculator.view.OutputView;
 
 
 public class Application {
-    private static final Pattern START_PATTERN = Pattern.compile("^\\/\\/\\W\\\\n");
-
     public static void main(String[] args) {
-        System.out.println("사용자가 입력할 문자열을 입력해주세요.");
-        String userInput = Console.readLine();
+        InputView inputView = new InputView();
+        OutputView outputView = new OutputView();
+        StringCalculator calculator = new StringCalculator();
 
-        int result = calculateSum(userInput.strip());
-        System.out.println("결과 : " + result);
-    }
+        CalculatorController controller = new CalculatorController(calculator, inputView, outputView);
 
-    public static int calculateSum(String userInput) {
-        int sum = 0;
-        Matcher matcher = START_PATTERN.matcher(userInput);
-
-        if (matcher.find()) {
-            char customDelimiter = userInput.charAt(2);
-
-            String numberPart = userInput.substring(matcher.end());
-            sum = Arrays.stream(numberPart.split("[:" + Pattern.quote(String.valueOf(customDelimiter)) + ",]"))
-                    .filter(s -> !s.isEmpty())
-                    .mapToInt(Integer::parseInt)
-                    .sum();
-        } else {
-            String numberPart = userInput;
-            sum = Arrays.stream(numberPart.split("[:,]"))
-                    .filter(s -> !s.isEmpty())
-                    .mapToInt(Integer::parseInt)
-                    .sum();
-        }
-        return sum;
+        controller.run();
     }
 }
