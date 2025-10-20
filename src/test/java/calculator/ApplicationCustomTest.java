@@ -76,7 +76,7 @@ public class ApplicationCustomTest extends NsTest {
                 Arguments.of("//>\\n1>2", 3),
                 Arguments.of("//?\\n1?2", 3),
                 Arguments.of("///\\n1/2", 3)
-                );
+        );
     }
 
     @ParameterizedTest
