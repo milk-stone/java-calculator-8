@@ -48,8 +48,35 @@ public class ApplicationCustomTest extends NsTest {
                 Arguments.of("//;\\n1,2", 3),
                 Arguments.of("//;\\n1:2", 3),
                 Arguments.of("//;\\n1;2", 3),
-                Arguments.of("//;\\n1:2;3", 6)
-        );
+                Arguments.of("//;\\n1:2;3", 6),
+                Arguments.of("//[\\n1[2[3", 6),
+                Arguments.of("//(\\n1(2:3(4", 10),
+                Arguments.of("//~\\n1~2", 3),
+                Arguments.of("//!\\n1!2", 3),
+                Arguments.of("//@\\n1@2", 3),
+                Arguments.of("//#\\n1#2", 3),
+                Arguments.of("//$\\n1$2", 3),
+                Arguments.of("//%\\n1%2", 3),
+                Arguments.of("//^\\n1^2", 3),
+                Arguments.of("//&\\n1&2", 3),
+                Arguments.of("//*\\n1*2", 3),
+                Arguments.of("//)\\n1)2", 3),
+                Arguments.of("//_\\n1_2", 3),
+                Arguments.of("//-\\n1-2", 3),
+                Arguments.of("//+\\n1+2", 3),
+                Arguments.of("//=\\n1=2", 3),
+                Arguments.of("//{\\n1{2", 3),
+                Arguments.of("//}\\n1}2", 3),
+                Arguments.of("//]\\n1]2", 3),
+                Arguments.of("//|\\n1|2", 3),
+                Arguments.of("//\\\\n1\\2", 3),
+                Arguments.of("//\"\\n1\"2", 3),
+                Arguments.of("//\'\\n1\'2", 3),
+                Arguments.of("//<\\n1<2", 3),
+                Arguments.of("//>\\n1>2", 3),
+                Arguments.of("//?\\n1?2", 3),
+                Arguments.of("///\\n1/2", 3)
+                );
     }
 
     @ParameterizedTest
@@ -66,7 +93,9 @@ public class ApplicationCustomTest extends NsTest {
                 Arguments.of("-1,2,3"),
                 Arguments.of("//;\\n1;-2"),
                 Arguments.of("//A\\n1A2"),
-                Arguments.of("1,a,2")
+                Arguments.of("1,a,2"),
+                Arguments.of("//(\\n1(2:3)4"),
+                Arguments.of("//3\\n132")
         );
     }
 
